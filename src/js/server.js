@@ -10,8 +10,6 @@ const uuid = require('uuid');
 
 const server = new Koa();
 
-const port = process.env.PORT || 7070;
-
 let tickets = [
   {
     id: '123-456-789',
@@ -87,6 +85,12 @@ server.use(async (ctx) => {
   // console.log('request.query.method:', ctx.request.query.method);
   // console.log('request.querystring:', ctx.request.querystring);
   // console.log('request.body:', ctx.request.body);
+
+  // ctx.response.set({
+  //   'Access-Control-Allow-Origin': '*',
+  //   'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+  //   'Access-Control-Allow-Headers': 'X-Secret, Content-Type'
+  // });
 
   ctx.response.body = `server response at port ${port}`;
   const { method } = ctx.request.query;
@@ -169,5 +173,7 @@ server.use(async (ctx) => {
       ctx.response.status = 404;
   }
 });
+
+const port = process.env.PORT || 7070;
 
 server.listen(port, () => console.log(`Koa server has been started on port ${port} ...`));
