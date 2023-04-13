@@ -90,7 +90,20 @@ server.use(async (ctx) => {
 
   ctx.response.body = `server response at port ${port}`;
   const { method } = ctx.request.query;
+  let process = null;
   switch (method) {
+    case 'GET':
+      process = ctx.request.query.process;
+      break
+    case 'POST':
+      process = ctx.request.body.process;
+      break
+    default:
+      ctx.response.status = 404;
+      return;
+  }
+
+  switch (process) {
     case 'allTickets':
       ctx.response.body = tickets;
       // console.log('response.body:', ctx.response.body);
